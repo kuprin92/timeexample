@@ -13,7 +13,7 @@ public enum OffsetType {
 
     public static OffsetType fromId(String id) {
         for (OffsetType at : OffsetType.values()) {
-            if (at.getId().equals(id)) {
+            if (at.id.equals(id)) {
                 return at;
             }
         }

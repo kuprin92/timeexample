@@ -31,11 +31,17 @@ public class TimeZoneOffset implements Serializable {
         this.name = name;
     }
 
-    public String getGetOffset() {
+    public String getOffset() {
+        Integer offset = getOffsetValue();
+        if (offset == null) return null;
+        return ZoneOffset.ofTotalSeconds(offset).getId();
+    }
+
+    public Integer getOffsetValue() {
         if (hour == null || minute == null || second == null || offsetType == null) return null;
         int offsetTypeValue = OffsetType.fromId(offsetType) == OffsetType.NEGATIVE ? -1 : 1;
         int offset = (hour * 60 * 60 + minute * 60 + second) * offsetTypeValue;
-        return ZoneOffset.ofTotalSeconds(offset).getId();
+        return offset;
     }
 
     public OffsetType getOffsetType() {

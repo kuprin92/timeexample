@@ -25,4 +25,14 @@ public class TimeController {
     public ResponseEntity<?> getTimeZones() {
         return ResponseEntity.ok(timeRepository.getZoneEntries());
     }
+
+    @GetMapping("/currentDateTime")
+    public ResponseEntity<?> getCurrentDateTime() {
+        return ResponseEntity.ok(timeRepository.getCurrentDateTime());
+    }
+
+    @GetMapping("/appTimezone")
+    public ResponseEntity<?> getAppTimezone() {
+        return ResponseEntity.ok(timeRepository.getAppTimezone());
+    }
 }
