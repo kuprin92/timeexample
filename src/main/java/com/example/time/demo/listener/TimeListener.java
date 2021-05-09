@@ -20,7 +20,7 @@ public class TimeListener {
     public static final String ZONE_ENTRY_UPDATE = "zone_entry_update";
     public static final String TIMEZONE_OFFSET_UPDATE = "timezone_offset_update";
     @Autowired
-    private TimeRepository restController;
+    private TimeRepository timeRepository;
 
     @Bean
     public NewTopic zone_entry_update() {
@@ -35,7 +35,7 @@ public class TimeListener {
     @KafkaListener(topicPattern = ZONE_ENTRY_UPDATE)
     public void zone_entry_update(String data) throws JsonProcessingException {
         final ZoneEntry zoneEntry = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).readValue(data, ZoneEntry.class);
-        restController.add(zoneEntry);
+        timeRepository.add(zoneEntry);
     }
 
     @KafkaListener(topicPattern = TIMEZONE_OFFSET_UPDATE)
@@ -43,6 +43,6 @@ public class TimeListener {
         final TimeZoneOffset zoneOffset = new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .readValue(data, TimeZoneOffset.class);
-        restController.add(zoneOffset);
+        timeRepository.add(zoneOffset);
     }
 }
